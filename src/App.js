@@ -6,8 +6,9 @@ import {
   Link,
 } from 'react-router-dom';
 import ReactLanding from './pages/reactLanding';
-import Ejemplo from './pages/ejemplo';
 import OtraPagina from './pages/otraPag';
+import Ejemplo from './pages/ejemplo';
+import NotFound from './pages/404';
 import './App.css';
 
 function App() {
@@ -22,17 +23,23 @@ function App() {
             <li>
               <Link to='/otro'>Otro</Link>
             </li>
+            <li>
+              <Link to='/ejemplo'>Catalogo</Link>
+            </li>
           </ul>
         </nav>
         <Switch>
-          <Route path='/otro'>
+          <Route exact path='/otro'>
             <OtraPagina />
           </Route>
-          <Route path='/ejemplo'>
+          <Route exact path='/ejemplo'>
             <Ejemplo />
           </Route>
-          <Route path='/'>
+          <Route exact path='/'>
             <ReactLanding />
+          </Route>
+          <Route path='*'>
+            <NotFound />
           </Route>
         </Switch>
       </div>
