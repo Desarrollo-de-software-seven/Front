@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import ReactLanding from './pages/reactLanding';
 import OtraPagina from './pages/otraPag';
+import NotFound from './pages/404';
 import './App.css';
 
 function App() {
@@ -24,11 +25,14 @@ function App() {
           </ul>
         </nav>
         <Switch>
-          <Route path='/otro'>
+          <Route exact path='/otro'>
             <OtraPagina />
           </Route>
-          <Route path='/'>
+          <Route exact path='/'>
             <ReactLanding />
+          </Route>
+          <Route path='*'>
+            <NotFound />
           </Route>
         </Switch>
       </div>
