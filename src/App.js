@@ -6,6 +6,7 @@ import {
   Link,
 } from 'react-router-dom';
 import ReactLanding from './pages/reactLanding';
+import Ejemplo from './pages/ejemplo';
 import OtraPagina from './pages/otraPag';
 import './App.css';
 
@@ -26,6 +27,9 @@ function App() {
         <Switch>
           <Route path='/otro'>
             <OtraPagina />
+          </Route>
+          <Route path='/ejemplo'>
+            <Ejemplo />
           </Route>
           <Route path='/'>
             <ReactLanding />
