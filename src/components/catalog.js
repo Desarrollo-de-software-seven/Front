@@ -267,10 +267,7 @@ const useStyles = makeStyles((theme) => ({
                 key={new_request.id} 
                 requestId={new_request.id} 
                 name={new_request.name}
-                vacancies= {new_request.vacancies}
-                jobDuration= {new_request.job_duration}
-                description_summary= {new_request.description_summary}
-                createdDate= {new_request.created_date}
+                price= {new_request.price}
                   />
 
                       
