@@ -5,9 +5,9 @@ import {
   Route,
   Link,
 } from 'react-router-dom';
-import ReactLanding from './pages/reactLanding';
+import ReactLanding from './pages/landing';
 import OtraPagina from './pages/otraPag';
-import Ejemplo from './pages/ejemplo';
+import ViewCatalog from './pages/view-catalog';
 import NotFound from './pages/404';
 import './App.css';
 
@@ -24,7 +24,7 @@ function App() {
               <Link to='/otro'>Otro</Link>
             </li>
             <li>
-              <Link to='/ejemplo'>Catalogo</Link>
+              <Link to='/view-catalog'>Catálogo</Link>
             </li>
           </ul>
         </nav>
@@ -32,8 +32,8 @@ function App() {
           <Route exact path='/otro'>
             <OtraPagina />
           </Route>
-          <Route exact path='/ejemplo'>
-            <Ejemplo />
+          <Route exact path='/view-catalog'>
+            <ViewCatalog />
           </Route>
           <Route exact path='/'>
             <ReactLanding />

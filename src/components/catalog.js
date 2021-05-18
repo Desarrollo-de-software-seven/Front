@@ -211,9 +211,7 @@ const useStyles = makeStyles((theme) => ({
        aria-label="Horizontal tabs"
        centered
      >
-       <Tab label="Inicio" {...a11yProps(0)} />
-       <Tab label="Solicitudes pendientes" {...a11yProps(1)} />
-       <Tab label="Solicitudes publicadas" {...a11yProps(2)} />
+       <Tab label="Catálogo" {...a11yProps(0)} />
 
      </Tabs>
      </Paper>
@@ -232,9 +230,7 @@ const useStyles = makeStyles((theme) => ({
           aria-label="Vertical tabs"
           className={classes.verticalTabs}
         >
-          <Tab label="Inicio" {...a11yProps(0)} />
-          <Tab label="Solicitudes pendientes" {...a11yProps(1)} />
-          <Tab label="Solicitudes publicadas" {...a11yProps(2)} />
+          <Tab label="Catálogo" {...a11yProps(0)} />
 
         </Tabs>
         </Hidden>
@@ -245,7 +241,7 @@ const useStyles = makeStyles((theme) => ({
         
          {/* // Aquí comienza el componente de la tab n°2*/}
 
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={0}>
 
 
         {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
