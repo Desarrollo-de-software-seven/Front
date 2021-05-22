@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => createStyles({
 const ProductCard = (props) => {
   const classes = useStyles();
   const {
-    requestId, name, vacancies, jobDuration, descriptionSummary, createdDate,
+    requestId, name, price,
   } = props;
 
   return (
@@ -68,22 +68,8 @@ const ProductCard = (props) => {
         <CardContent className={classes.cardContent}>
 
           <Typography variant="caption" component="p">
-            <Box fontWeight="fontWeightMedium" display="inline">Vacantes:</Box>
-            {vacancies}
-          </Typography>
-          <Typography variant="caption" component="p">
-            <Box fontWeight="fontWeightMedium" display="inline">Duración del trabajo:</Box>
-            {jobDuration}
-          </Typography>
-          <Typography variant="caption" component="p">
-            <Box fontWeight="fontWeightMedium" display="inline">Resumen descripción:</Box>
-            {descriptionSummary}
-          </Typography>
-          <Typography variant="caption" component="p">
-            <Box fontWeight="fontWeightMedium" display="inline">Fecha creación:</Box>
-            {createdDate.toLocaleDateString('es-ES', {
-              weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-            })}
+            <Box fontWeight="fontWeightMedium" display="inline">Precio: $</Box>
+            {price}
           </Typography>
 
         </CardContent>

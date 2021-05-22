@@ -5,14 +5,10 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Paper from '@material-ui/core/Paper';
 import Hidden from '@material-ui/core/Hidden';
-
 
 import ProductCard from './card';
 import Tabs from '@material-ui/core/Tabs';
@@ -211,9 +207,7 @@ const useStyles = makeStyles((theme) => ({
        aria-label="Horizontal tabs"
        centered
      >
-       <Tab label="Inicio" {...a11yProps(0)} />
-       <Tab label="Solicitudes pendientes" {...a11yProps(1)} />
-       <Tab label="Solicitudes publicadas" {...a11yProps(2)} />
+       <Tab label="Catálogo" {...a11yProps(0)} />
 
      </Tabs>
      </Paper>
@@ -232,9 +226,7 @@ const useStyles = makeStyles((theme) => ({
           aria-label="Vertical tabs"
           className={classes.verticalTabs}
         >
-          <Tab label="Inicio" {...a11yProps(0)} />
-          <Tab label="Solicitudes pendientes" {...a11yProps(1)} />
-          <Tab label="Solicitudes publicadas" {...a11yProps(2)} />
+          <Tab label="Catálogo" {...a11yProps(0)} />
 
         </Tabs>
         </Hidden>
@@ -245,7 +237,7 @@ const useStyles = makeStyles((theme) => ({
         
          {/* // Aquí comienza el componente de la tab n°2*/}
 
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={0}>
 
 
         {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
@@ -267,10 +259,7 @@ const useStyles = makeStyles((theme) => ({
                 key={new_request.id} 
                 requestId={new_request.id} 
                 name={new_request.name}
-                vacancies= {new_request.vacancies}
-                jobDuration= {new_request.job_duration}
-                description_summary= {new_request.description_summary}
-                createdDate= {new_request.created_date}
+                price= {new_request.price}
                   />
 
                       
