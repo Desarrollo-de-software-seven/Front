@@ -20,6 +20,7 @@ import ProductCard from './card';
 
 import { catalogProducts } from './sample_json';
 import logo from '../logo-seven.png';
+import call from '../call-assistant.png';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -286,6 +287,10 @@ const ProductsList = (props) => {
         </Modal>
 
       </div>
+
+      <a href='/'>
+        <img src={call} className="App-call" alt="call" style={{ height: '10%', width: '6%' }}/>
+      </a>
 
     </React.Fragment>
   );
