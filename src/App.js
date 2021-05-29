@@ -7,6 +7,7 @@ import {
 import Landing from './pages/landing';
 import ViewCatalog from './pages/view-catalog';
 import NotFound from './pages/404';
+import PostAttendanceForm from './pages/post_attendance_form';
 import './App.css';
 
 function App() {
@@ -14,6 +15,9 @@ function App() {
     <Router>
       <div>
         <Switch>
+          <Route exact path='/form'>
+            <PostAttendanceForm />
+          </Route>
           <Route exact path='/view-catalog'>
             <ViewCatalog />
           </Route>
