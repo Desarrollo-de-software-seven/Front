@@ -7,7 +7,7 @@ const OtraPagina = () => (
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
       <h2>
-        Hola! Esta es otra pagina
+        Hola! Esta es otra página
       </h2>
       <a
         className="App-link"
