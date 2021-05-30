@@ -6,10 +6,10 @@ import {
 } from 'react-router-dom';
 import Landing from './pages/landing';
 import ViewCatalog from './pages/view-catalog';
+import WaitingView from './pages/waiting-view';
 import NotFound from './pages/404';
-import ViewOtraPag from './pages/otraPag';
 
-
+import PostAttendanceForm from './pages/post_attendance_form';
 import './App.css';
 
 function App() {
@@ -17,11 +17,14 @@ function App() {
     <Router>
       <div>
         <Switch>
+          <Route exact path='/form'>
+            <PostAttendanceForm />
+          </Route>
           <Route exact path='/view-catalog'>
             <ViewCatalog />
           </Route>
-          <Route exact path='/otraPag'>
-            <ViewOtraPag />
+          <Route exact path='/waiting-view'>
+            <WaitingView />
           </Route>
           <Route exact path='/'>
             <Landing />
