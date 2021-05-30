@@ -8,7 +8,6 @@ import VideoCall from '@material-ui/icons/VideoCall';
 import ListAlt from '@material-ui/icons/ListAlt';
 import logo from '../logo-seven.png';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -21,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   appbar: {
-      backgroundColor: '#2d7e7e',
-  }
+    backgroundColor: '#2d7e7e',
+  },
 }));
 
 export default function ButtonAppBar() {
@@ -32,14 +31,26 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar position="static" className= {classes.appbar}>
         <Toolbar>
-            <a href='/'>
-                <img src={logo} className="App-logo" alt="logo" style={{ height: '6%', width: '20%', marginTop: '1%' }}/>
-            </a>
+          <a href='/'>
+            <img src={logo} className="App-logo" alt="logo" style={{ height: '6%', width: '20%', marginTop: '1%' }}/>
+          </a>
           <Typography variant="h6" className={classes.title}>
             Asistente Virtual
           </Typography>
-          <Button className={classes.menuButton} color="inherit" aria-label="catalog" startIcon = {<ListAlt />} href='/view-catalog'/>
-          <Button className={classes.menuButton} color="inherit" aria-label="videocall" startIcon = {<VideoCall />} href='/waiting-view'/>
+          <Button
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="catalog"
+            startIcon = {<ListAlt />}
+            href='/view-catalog'
+          />
+          <Button
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="videocall"
+            startIcon = {<VideoCall />}
+            href='/waiting-view'
+          />
         </Toolbar>
       </AppBar>
     </div>
