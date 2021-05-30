@@ -39,7 +39,7 @@ export default function ButtonAppBar() {
             Asistente Virtual
           </Typography>
           <Button className={classes.menuButton} color="inherit" aria-label="catalog" startIcon = {<ListAlt />} href='/view-catalog'/>
-          <Button className={classes.menuButton} color="inherit" aria-label="videocall" startIcon = {<VideoCall />} href='#'/>
+          <Button className={classes.menuButton} color="inherit" aria-label="videocall" startIcon = {<VideoCall />} href='/waiting-view'/>
         </Toolbar>
       </AppBar>
     </div>
