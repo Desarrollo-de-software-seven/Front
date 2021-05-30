@@ -8,6 +8,7 @@ import Landing from './pages/landing';
 import ViewCatalog from './pages/view-catalog';
 import WaitingView from './pages/waiting-view';
 import NotFound from './pages/404';
+
 import PostAttendanceForm from './pages/post_attendance_form';
 import './App.css';
 
