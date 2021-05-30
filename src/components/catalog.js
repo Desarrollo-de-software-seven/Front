@@ -15,6 +15,7 @@ import Tab from '@material-ui/core/Tab';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import Modal from '@material-ui/core/Modal';
 import { green } from '@material-ui/core/colors';
+import axios from 'axios';
 
 import ProductCard from './card';
 
@@ -222,6 +223,9 @@ const ProductsList = (props) => {
             aria-label="Horizontal tabs"
           >
             <Tab label="Catálogo" {...a11yProps(0)} />
+            <Tab label="TV's" {...a11yProps(0)} />
+            <Tab label='Celulares' {...a11yProps(0)} />
+            <Tab label='Tablets' {...a11yProps(0)} />
 
           </Tabs>
         </Paper>
@@ -241,17 +245,119 @@ const ProductsList = (props) => {
             className={classes.verticalTabs}
           >
             <Tab label="Catálogo" {...a11yProps(0)} />
+            <Tab label="TV's" {...a11yProps(0)} />
+            <Tab label='Celulares' {...a11yProps(0)} />
+            <Tab label='Tablets' {...a11yProps(0)} />
 
           </Tabs>
         </Hidden>
 
-        {/* // Aquí comienza el componente de la tab n°2*/}
+        {/* // Aquí comienza el componente de la tab n°0*/}
 
         <TabPanel value={value} index={0}>
 
           {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
           <Hidden mdDown>
             <Typography variant='h6'>Catálogo</Typography>
+          </Hidden>
+          <Hidden lgUp>
+            <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
+          </Hidden>
+          <GridList cellHeight={'auto'} cols={cols} className={classes.YgridList}>
+            {sortedProducts.map((product) => (
+              <GridListTile key={product.id} className={classes.GridListTile} >
+
+                {/* Se presenta cada tarjeta de solicitud nueva. Se utiliza slice para no mostrar
+            todos los datos en la vista principal. La idea es que aquí se muestren aquellas
+            solicitudes desde hace X días, por lo que desde el backend se requeriría que los entregaran
+            en un endpoint ordenado */}
+                <ProductCard
+                  key={product.id}
+                  requestId={product.id}
+                  name={product.name}
+                  price= {product.price}
+                  setSelectedProduct = {setSelectedProduct}
+                />
+
+              </GridListTile>
+            ))}
+
+          </GridList>
+        </TabPanel>
+
+        {/* // Aquí comienza el componente de la tab n°1*/}
+
+        <TabPanel value={value} index={1}>
+
+          {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
+          <Hidden mdDown>
+            <Typography variant='h6'>TV's</Typography>
+          </Hidden>
+          <Hidden lgUp>
+            <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
+          </Hidden>
+          <GridList cellHeight={'auto'} cols={cols} className={classes.YgridList}>
+            {sortedProducts.map((product) => (
+              <GridListTile key={product.id} className={classes.GridListTile} >
+
+                {/* Se presenta cada tarjeta de solicitud nueva. Se utiliza slice para no mostrar
+            todos los datos en la vista principal. La idea es que aquí se muestren aquellas
+            solicitudes desde hace X días, por lo que desde el backend se requeriría que los entregaran
+            en un endpoint ordenado */}
+                <ProductCard
+                  key={product.id}
+                  requestId={product.id}
+                  name={product.name}
+                  price= {product.price}
+                  setSelectedProduct = {setSelectedProduct}
+                />
+
+              </GridListTile>
+            ))}
+
+          </GridList>
+        </TabPanel>
+
+        {/* // Aquí comienza el componente de la tab n°2*/}
+
+        <TabPanel value={value} index={2}>
+
+          {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
+          <Hidden mdDown>
+            <Typography variant='h6'>Celulares</Typography>
+          </Hidden>
+          <Hidden lgUp>
+            <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
+          </Hidden>
+          <GridList cellHeight={'auto'} cols={cols} className={classes.YgridList}>
+            {sortedProducts.map((product) => (
+              <GridListTile key={product.id} className={classes.GridListTile} >
+
+                {/* Se presenta cada tarjeta de solicitud nueva. Se utiliza slice para no mostrar
+            todos los datos en la vista principal. La idea es que aquí se muestren aquellas
+            solicitudes desde hace X días, por lo que desde el backend se requeriría que los entregaran
+            en un endpoint ordenado */}
+                <ProductCard
+                  key={product.id}
+                  requestId={product.id}
+                  name={product.name}
+                  price= {product.price}
+                  setSelectedProduct = {setSelectedProduct}
+                />
+
+              </GridListTile>
+            ))}
+
+          </GridList>
+        </TabPanel>
+
+        {/* // Aquí comienza el componente de la tab n°3*/}
+
+        <TabPanel value={value} index={3}>
+
+          {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
+          <Hidden mdDown>
+            <Typography variant='h6'>Tablets</Typography>
           </Hidden>
           <Hidden lgUp>
             <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
