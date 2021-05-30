@@ -19,7 +19,7 @@ import { green } from '@material-ui/core/colors';
 import ProductCard from './card';
 
 import { catalogProducts } from './sample_json';
-import logo from '../logo-seven.png';
+
 import call from '../call-assistant.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -207,9 +207,6 @@ const ProductsList = (props) => {
 
   return (
     <React.Fragment>
-      <a href='/'>
-        <img src={logo} className="App-logo" alt="logo" style={{ height: '6%', width: '10%', marginTop: '1%' }}/>
-      </a>
       {/* // Esta taba se ve solamente cuando la pantalla es de ancho mayor a 'lg' (Ver documentación Hidden) */}
       <Hidden lgUp>
         <Paper className={classes.horizontalTabs}>

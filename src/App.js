@@ -7,6 +7,9 @@ import {
 import Landing from './pages/landing';
 import ViewCatalog from './pages/view-catalog';
 import NotFound from './pages/404';
+import ViewOtraPag from './pages/otraPag';
+
+
 import './App.css';
 
 function App() {
@@ -16,6 +19,9 @@ function App() {
         <Switch>
           <Route exact path='/view-catalog'>
             <ViewCatalog />
+          </Route>
+          <Route exact path='/otraPag'>
+            <ViewOtraPag />
           </Route>
           <Route exact path='/'>
             <Landing />
