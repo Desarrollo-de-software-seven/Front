@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  CssBaseline, Container,
+  CssBaseline,
 } from '@material-ui/core';
 // import { makeStyles } from '@material-ui/core/styles';
 // import RecruitingView from '../../src/recruitment-process/recruitment_view';
@@ -11,11 +11,8 @@ import Assistant from '../components/assistant';
 export default function WaitingView() {
   return (
     <>
-      <Container component="main" maxWidth="lg">
-
-        <CssBaseline />
-        <Assistant/>
-      </Container>
+      <CssBaseline />
+      <Assistant/>
     </>
   );
 }
