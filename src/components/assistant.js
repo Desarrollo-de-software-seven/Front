@@ -1,7 +1,5 @@
 import React from 'react';
-
 // import Box from '@material-ui/core/Box';
-
 // import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 // import { Button } from '@material-ui/core';
@@ -26,7 +24,7 @@ const Assistant = () => {
         <h1 className="title-waiting-view">Estás en la sala de espera para contactar a un asistente,
           aguarda un momento.</h1>
         <br></br>
-        <a href="/"><button className="button-waiting-view" size="large" variant="contained">Ir a encuesta</button></a>
+        <a href="/form"><button className="button-waiting-view" size="large" variant="contained">Ir a encuesta</button></a>
       </header>
     </div>
   );
