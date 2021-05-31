@@ -19,10 +19,10 @@ export const catalogProducts = [
     name: 'Producto Ejemplo 5',
     price: 25590,
   },
-  { id: '00006',
-    name: 'Producto Ejemplo 6',
-    price: 23990,
-  },
+  // { id: '00006',
+  //   name: 'Producto Ejemplo 6',
+  //   price: 23990,
+  // },
 
 ];
 

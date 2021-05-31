@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Box from '@material-ui/core/Box';
 
@@ -19,7 +19,7 @@ import axios from 'axios';
 
 import ProductCard from './card';
 
-import { catalogProducts } from './sample_json';
+// import { catalogProducts } from './sample_json';
 import logo from '../logo-seven.png';
 import call from '../call-assistant.png';
 
@@ -65,11 +65,13 @@ const useStyles = makeStyles((theme) => ({
   GridListTile: {
     display: 'grid',
     justifyContent: 'center',
+    width: 230,
   },
 
   // Estilo grid verticales (se ven en la tab 2 y 3)
   YgridList: {
     maxWidth: 1100,
+    width: 1050,
     maxHeight: theme.spacing(65),
     // Aquí se estiliza la scrollbar
     '&::-webkit-scrollbar': {
@@ -141,12 +143,47 @@ function a11yProps(index) {
   };
 }
 
+// eslint-disable-next-line max-statements
 const ProductsList = (props) => {
   const classes = useStyles();
 
   // El valor de la tab actual que se está viendo
   const [value, setValue] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState();
+  const [tvs, setTvs] = useState([]);
+  const [tablets, setTablets] = useState([]);
+  const [phones, setPhones] = useState([]);
+  const [catalogProducts, setCatalgoProducts] = useState([]);
+
+  // eslint-disable-next-line max-statements
+  const fetchData = async () => {
+    try {
+      const tvData = await axios.get('http://localhost:3000/tvs');
+      setTvs(tvData.data);
+      const tabletsData = await axios.get('http://localhost:3000/tablets');
+      setTablets([...tabletsData.data]);
+      const phonesData = await axios.get('http://localhost:3000/Smartphones');
+      setPhones([...phonesData.data]);
+      const products = [];
+      for (let i = 0; i < tvData.data.length; i++) {
+        products.push({ ...tvData.data[i] });
+      }
+      for (let i = 0; i < tabletsData.data.length; i++) {
+        products.push({ ...tabletsData.data[i] });
+      }
+      for (let i = 0; i < phonesData.data.length; i++) {
+        products.push({ ...phonesData.data[i] });
+      }
+      setCatalgoProducts(products);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Manejador de cambio de la tab que se está viendo
   const handleChange = (_, newValue) => {
@@ -182,29 +219,53 @@ const ProductsList = (props) => {
 
   // Se utiliza .slice para no cambiar el array original y así utilizar filtros en una copia de él
   // Se hace sort de los request según el atributo requerido de la sample data
-  const sortedProducts = catalogProducts.slice().sort((a, b) => b.created_date - a.created_date);
+  const sortedProducts = catalogProducts.slice().sort((a, b) => ((a.name > b.name) ? 1 : -1));
+  const sortedTvs = tvs.slice().sort((a, b) => ((a.name > b.name) ? 1 : -1));
+  const sortedTablets = tablets.slice().sort((a, b) => ((a.name > b.name) ? 1 : -1));
+  const sortedPhones = phones.slice().sort((a, b) => ((a.name > b.name) ? 1 : -1));
+  for (let i = 0; i < sortedProducts.length; i++) {
+    sortedProducts[i].index = i;
+  }
+  for (let i = 0; i < sortedTvs.length; i++) {
+    sortedTvs[i].index = i;
+  }
+  for (let i = 0; i < sortedTablets.length; i++) {
+    sortedTablets[i].index = i;
+  }
+  for (let i = 0; i < sortedPhones.length; i++) {
+    sortedPhones[i].index = i;
+  }
+  console.log(sortedProducts);
   // -----------------------------------------
 
-  const ProductDetail = () => {
-    const product = sortedProducts[parseInt(selectedProduct, 10) - 1];
-
-    return (
-      <div className={classes.paper}>
-        <div style={{ flexDirection: 'row', display: 'flex' }}>
-          <Avatar className={classes.avatar} />
-          <div>
-            <h2 id="simple-modal-title">{product.name}</h2>
-            <p id="simple-modal-description">
-          Precio: {product.price}
-            </p>
-          </div>
-        </div>
-        <button type='button' onClick={handleClose}>
-          Cerrar
-        </button>
-      </div>
-    );
+  const selectProduct = (index) => {
+    if (value === 0) {
+      setSelectedProduct(sortedProducts[index]);
+    } else if (value === 1) {
+      setSelectedProduct(sortedTvs[index]);
+    } else if (value === 2) {
+      setSelectedProduct(sortedPhones[index]);
+    } else {
+      setSelectedProduct(sortedTablets[index]);
+    }
   };
+
+  const ProductDetail = () => (
+    <div className={classes.paper}>
+      <div style={{ flexDirection: 'row', display: 'flex' }}>
+        <Avatar className={classes.avatar} />
+        <div>
+          <h2 id="simple-modal-title">{selectedProduct.name}</h2>
+          <p id="simple-modal-description">
+          Precio: {selectedProduct.price}
+          </p>
+        </div>
+      </div>
+      <button type='button' onClick={handleClose}>
+          Cerrar
+      </button>
+    </div>
+  );
 
   return (
     <React.Fragment>
@@ -276,7 +337,8 @@ const ProductsList = (props) => {
                   requestId={product.id}
                   name={product.name}
                   price= {product.price}
-                  setSelectedProduct = {setSelectedProduct}
+                  index= {product.index}
+                  setSelectedProduct = {selectProduct}
                 />
 
               </GridListTile>
@@ -291,25 +353,26 @@ const ProductsList = (props) => {
 
           {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
           <Hidden mdDown>
-            <Typography variant='h6'>TV's</Typography>
+            <Typography variant='h6'>{'TV\'s'}</Typography>
           </Hidden>
           <Hidden lgUp>
             <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
           </Hidden>
           <GridList cellHeight={'auto'} cols={cols} className={classes.YgridList}>
-            {sortedProducts.map((product) => (
-              <GridListTile key={product.id} className={classes.GridListTile} >
+            {sortedTvs.map((tv) => (
+              <GridListTile key={tv.id} className={classes.GridListTile} >
 
                 {/* Se presenta cada tarjeta de solicitud nueva. Se utiliza slice para no mostrar
             todos los datos en la vista principal. La idea es que aquí se muestren aquellas
             solicitudes desde hace X días, por lo que desde el backend se requeriría que los entregaran
             en un endpoint ordenado */}
                 <ProductCard
-                  key={product.id}
-                  requestId={product.id}
-                  name={product.name}
-                  price= {product.price}
-                  setSelectedProduct = {setSelectedProduct}
+                  key={tv.id}
+                  requestId={tv.id}
+                  name={tv.name}
+                  price= {tv.price}
+                  index= {tv.index}
+                  setSelectedProduct = {selectProduct}
                 />
 
               </GridListTile>
@@ -330,19 +393,20 @@ const ProductsList = (props) => {
             <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
           </Hidden>
           <GridList cellHeight={'auto'} cols={cols} className={classes.YgridList}>
-            {sortedProducts.map((product) => (
-              <GridListTile key={product.id} className={classes.GridListTile} >
+            {sortedPhones.map((phone) => (
+              <GridListTile key={phone.id} className={classes.GridListTile} >
 
                 {/* Se presenta cada tarjeta de solicitud nueva. Se utiliza slice para no mostrar
             todos los datos en la vista principal. La idea es que aquí se muestren aquellas
             solicitudes desde hace X días, por lo que desde el backend se requeriría que los entregaran
             en un endpoint ordenado */}
                 <ProductCard
-                  key={product.id}
-                  requestId={product.id}
-                  name={product.name}
-                  price= {product.price}
-                  setSelectedProduct = {setSelectedProduct}
+                  key={phone.id}
+                  requestId={phone.id}
+                  name={phone.name}
+                  price= {phone.price}
+                  index= {phone.index}
+                  setSelectedProduct = {selectProduct}
                 />
 
               </GridListTile>
@@ -363,19 +427,20 @@ const ProductsList = (props) => {
             <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
           </Hidden>
           <GridList cellHeight={'auto'} cols={cols} className={classes.YgridList}>
-            {sortedProducts.map((product) => (
-              <GridListTile key={product.id} className={classes.GridListTile} >
+            {sortedTablets.map((tablet) => (
+              <GridListTile key={tablet.id} className={classes.GridListTile} >
 
                 {/* Se presenta cada tarjeta de solicitud nueva. Se utiliza slice para no mostrar
             todos los datos en la vista principal. La idea es que aquí se muestren aquellas
             solicitudes desde hace X días, por lo que desde el backend se requeriría que los entregaran
             en un endpoint ordenado */}
                 <ProductCard
-                  key={product.id}
-                  requestId={product.id}
-                  name={product.name}
-                  price= {product.price}
-                  setSelectedProduct = {setSelectedProduct}
+                  key={tablet.id}
+                  requestId={tablet.id}
+                  name={tablet.name}
+                  price= {tablet.price}
+                  index= {tablet.index}
+                  setSelectedProduct = {selectProduct}
                 />
 
               </GridListTile>
