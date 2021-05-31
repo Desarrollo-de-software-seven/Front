@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
