@@ -11,7 +11,7 @@ import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => createStyles({
   root: {
-    maxWidth: 230,
+    width: 230,
     margin: theme.spacing(0.5),
   },
   cardHeader: {
@@ -33,11 +33,11 @@ const useStyles = makeStyles((theme) => createStyles({
 const ProductCard = (props) => {
   const classes = useStyles();
   const {
-    requestId, name, price, setSelectedProduct,
+    requestId, name, price, setSelectedProduct, index
   } = props;
 
   const handleClick = () => {
-    setSelectedProduct(requestId);
+    setSelectedProduct(index);
   };
 
   return (
@@ -49,12 +49,6 @@ const ProductCard = (props) => {
           className={classes.cardHeader}
           avatar={(
             <Avatar alt={name} className={classes.avatar} />
-          )}
-          title={(
-            <Typography variant="body2">
-              N°
-              {requestId}
-            </Typography>
           )}
           subheader={(
             <Typography style={{ height: 53 }} variant="h6" component="h2">
