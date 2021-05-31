@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => createStyles({
 const ProductCard = (props) => {
   const classes = useStyles();
   const {
-    requestId, name, price, setSelectedProduct, index
+    name, price, setSelectedProduct, index,
   } = props;
 
   const handleClick = () => {

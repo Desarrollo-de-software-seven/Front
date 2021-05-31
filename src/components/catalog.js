@@ -313,7 +313,7 @@ const ProductsList = (props) => {
 
           {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
           <Hidden mdDown>
-            <Typography variant='h6'>TV's</Typography>
+            <Typography variant='h6'>{'TV\'s'}</Typography>
           </Hidden>
           <Hidden lgUp>
             <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
