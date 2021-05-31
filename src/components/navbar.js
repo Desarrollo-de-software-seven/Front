@@ -31,9 +31,11 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar position="static" className= {classes.appbar}>
         <Toolbar>
-          <a href='/'>
-            <img src={logo} className="App-logo" alt="logo" style={{ height: '6%', width: '20%', marginTop: '1%' }}/>
-          </a>
+          <div>
+            <a href='/'>
+              <img src={logo} className="App-logo" alt="logo" style={{ height: '6%', width: '20%', marginTop: '1%' }}/>
+            </a>
+          </div>
           <Typography variant="h6" className={classes.title}>
             Asistente Virtual
           </Typography>

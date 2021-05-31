@@ -12,9 +12,9 @@ import Navbar from '../components/navbar';
 export default function ViewCatalog() {
   return (
     <>
+      <Navbar/>
       <Container component="main" maxWidth="lg">
         <CssBaseline />
-        <Navbar/>
         <Catalog/>
       </Container>
     </>
