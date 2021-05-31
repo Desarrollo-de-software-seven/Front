@@ -19,7 +19,7 @@ import { green } from '@material-ui/core/colors';
 
 import ProductCard from './card';
 
-import { catalogProducts } from './sample_json';
+import { catalog, tablets, tvs, phones } from './sample_json';
 
 import call from '../call-assistant.png';
 
@@ -70,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
   // Estilo grid verticales (se ven en la tab 2 y 3)
   YgridList: {
     maxWidth: 1100,
+    width: 1050,
     maxHeight: theme.spacing(65),
     // Aquí se estiliza la scrollbar
     '&::-webkit-scrollbar': {
@@ -141,6 +142,7 @@ function a11yProps(index) {
   };
 }
 
+// eslint-disable-next-line max-statements
 const ProductsList = (props) => {
   const classes = useStyles();
 
@@ -182,29 +184,51 @@ const ProductsList = (props) => {
 
   // Se utiliza .slice para no cambiar el array original y así utilizar filtros en una copia de él
   // Se hace sort de los request según el atributo requerido de la sample data
-  const sortedProducts = catalogProducts.slice().sort((a, b) => b.created_date - a.created_date);
+  const sortedProducts = catalog.slice().sort((a, b) => b.created_date - a.created_date);
   // -----------------------------------------
 
-  const ProductDetail = () => {
-    const product = sortedProducts[parseInt(selectedProduct, 10) - 1];
+  for (let i = 0; i < sortedProducts.length; i++) {
+    sortedProducts[i].index = i;
+  }
+  for (let i = 0; i < tvs.length; i++) {
+    tvs[i].index = i;
+  }
+  for (let i = 0; i < tablets.length; i++) {
+    tablets[i].index = i;
+  }
+  for (let i = 0; i < phones.length; i++) {
+    phones[i].index = i;
+  }
+  // -----------------------------------------
 
-    return (
-      <div className={classes.paper}>
-        <div style={{ flexDirection: 'row', display: 'flex' }}>
-          <Avatar className={classes.avatar} />
-          <div>
-            <h2 id="simple-modal-title">{product.name}</h2>
-            <p id="simple-modal-description">
-          Precio: {product.price}
-            </p>
-          </div>
-        </div>
-        <button type='button' onClick={handleClose}>
-          Cerrar
-        </button>
-      </div>
-    );
+  const selectProduct = (index) => {
+    if (value === 0) {
+      setSelectedProduct(sortedProducts[index]);
+    } else if (value === 1) {
+      setSelectedProduct(tvs[index]);
+    } else if (value === 2) {
+      setSelectedProduct(phones[index]);
+    } else {
+      setSelectedProduct(tablets[index]);
+    }
   };
+
+  const ProductDetail = () => (
+    <div className={classes.paper}>
+      <div style={{ flexDirection: 'row', display: 'flex' }}>
+        <Avatar className={classes.avatar} />
+        <div>
+          <h2 id="simple-modal-title">{selectedProduct.name}</h2>
+          <p id="simple-modal-description">
+          Precio: {selectedProduct.price}
+          </p>
+        </div>
+      </div>
+      <button type='button' onClick={handleClose}>
+          Cerrar
+      </button>
+    </div>
+  );
 
   return (
     <React.Fragment>
@@ -220,6 +244,9 @@ const ProductsList = (props) => {
             aria-label="Horizontal tabs"
           >
             <Tab label="Catálogo" {...a11yProps(0)} />
+            <Tab label="TV's" {...a11yProps(0)} />
+            <Tab label='Celulares' {...a11yProps(0)} />
+            <Tab label='Tablets' {...a11yProps(0)} />
 
           </Tabs>
         </Paper>
@@ -239,11 +266,14 @@ const ProductsList = (props) => {
             className={classes.verticalTabs}
           >
             <Tab label="Catálogo" {...a11yProps(0)} />
+            <Tab label="TV's" {...a11yProps(0)} />
+            <Tab label='Celulares' {...a11yProps(0)} />
+            <Tab label='Tablets' {...a11yProps(0)} />
 
           </Tabs>
         </Hidden>
 
-        {/* // Aquí comienza el componente de la tab n°2*/}
+        {/* // Aquí comienza el componente de la tab n°0*/}
 
         <TabPanel value={value} index={0}>
 
@@ -267,7 +297,110 @@ const ProductsList = (props) => {
                   requestId={product.id}
                   name={product.name}
                   price= {product.price}
-                  setSelectedProduct = {setSelectedProduct}
+                  index= {product.index}
+                  setSelectedProduct = {selectProduct}
+                />
+
+              </GridListTile>
+            ))}
+
+          </GridList>
+        </TabPanel>
+
+        {/* // Aquí comienza el componente de la tab n°1*/}
+
+        <TabPanel value={value} index={1}>
+
+          {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
+          <Hidden mdDown>
+            <Typography variant='h6'>{'TV\'s'}</Typography>
+          </Hidden>
+          <Hidden lgUp>
+            <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
+          </Hidden>
+          <GridList cellHeight={'auto'} cols={cols} className={classes.YgridList}>
+            {tvs.map((product) => (
+              <GridListTile key={product.id} className={classes.GridListTile} >
+
+                {/* Se presenta cada tarjeta de solicitud nueva. Se utiliza slice para no mostrar
+            todos los datos en la vista principal. La idea es que aquí se muestren aquellas
+            solicitudes desde hace X días, por lo que desde el backend se requeriría que los entregaran
+            en un endpoint ordenado */}
+                <ProductCard
+                  key={product.id}
+                  requestId={product.id}
+                  name={product.name}
+                  price= {product.price}
+                  index= {product.index}
+                  setSelectedProduct = {selectProduct}
+                />
+
+              </GridListTile>
+            ))}
+
+          </GridList>
+        </TabPanel>
+
+        {/* // Aquí comienza el componente de la tab n°2*/}
+
+        <TabPanel value={value} index={2}>
+
+          {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
+          <Hidden mdDown>
+            <Typography variant='h6'>Celulares</Typography>
+          </Hidden>
+          <Hidden lgUp>
+            <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
+          </Hidden>
+          <GridList cellHeight={'auto'} cols={cols} className={classes.YgridList}>
+            {phones.map((product) => (
+              <GridListTile key={product.id} className={classes.GridListTile} >
+
+                {/* Se presenta cada tarjeta de solicitud nueva. Se utiliza slice para no mostrar
+            todos los datos en la vista principal. La idea es que aquí se muestren aquellas
+            solicitudes desde hace X días, por lo que desde el backend se requeriría que los entregaran
+            en un endpoint ordenado */}
+                <ProductCard
+                  key={product.id}
+                  requestId={product.id}
+                  name={product.name}
+                  price= {product.price}
+                  index= {product.index}
+                  setSelectedProduct = {selectProduct}
+                />
+
+              </GridListTile>
+            ))}
+
+          </GridList>
+        </TabPanel>
+
+        {/* // Aquí comienza el componente de la tab n°3*/}
+
+        <TabPanel value={value} index={3}>
+
+          {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
+          <Hidden mdDown>
+            <Typography variant='h6'>Tablets</Typography>
+          </Hidden>
+          <Hidden lgUp>
+            <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
+          </Hidden>
+          <GridList cellHeight={'auto'} cols={cols} className={classes.YgridList}>
+            {tablets.map((product) => (
+              <GridListTile key={product.id} className={classes.GridListTile} >
+
+                {/* Se presenta cada tarjeta de solicitud nueva. Se utiliza slice para no mostrar
+            todos los datos en la vista principal. La idea es que aquí se muestren aquellas
+            solicitudes desde hace X días, por lo que desde el backend se requeriría que los entregaran
+            en un endpoint ordenado */}
+                <ProductCard
+                  key={product.id}
+                  requestId={product.id}
+                  name={product.name}
+                  price= {product.price}
+                  index= {product.index}
+                  setSelectedProduct = {selectProduct}
                 />
 
               </GridListTile>
