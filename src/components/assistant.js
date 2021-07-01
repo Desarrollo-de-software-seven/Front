@@ -10,8 +10,8 @@ const Assistant = () => (
       <h1 className="title-waiting-view">Estás en la sala de espera para contactar a un asistente,
           aguarda un momento.</h1>
       <br></br>
-      <a href="/form">
-        <button className="button-waiting-view" size="large" variant="contained">Ir a encuesta</button>
+      <a href="/video-call">
+        <button className="button-waiting-view" size="large" variant="contained">Video llamada</button>
       </a>
     </header>
   </div>
