@@ -18,7 +18,7 @@ const NotFound = () => (
         paddingRight: '12px',
         margin: 0,
       }}>Error 404</h1>
-      <h4 style= {{ margin: '0' }}>Pagina no encontrada</h4>
+      <h4 style= {{ margin: '0' }}>Página no encontrada</h4>
     </div>
   </div>
 );
