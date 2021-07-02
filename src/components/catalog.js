@@ -244,9 +244,9 @@ const ProductsList = (props) => {
             aria-label="Horizontal tabs"
           >
             <Tab label="Catálogo" {...a11yProps(0)} />
-            <Tab label="TV's" {...a11yProps(0)} />
-            <Tab label='Celulares' {...a11yProps(0)} />
-            <Tab label='Tablets' {...a11yProps(0)} />
+            <Tab label="TV's" {...a11yProps(1)} />
+            <Tab label='Celulares' {...a11yProps(2)} />
+            <Tab label='Tablets' {...a11yProps(3)} />
 
           </Tabs>
         </Paper>
@@ -266,9 +266,9 @@ const ProductsList = (props) => {
             className={classes.verticalTabs}
           >
             <Tab label="Catálogo" {...a11yProps(0)} />
-            <Tab label="TV's" {...a11yProps(0)} />
-            <Tab label='Celulares' {...a11yProps(0)} />
-            <Tab label='Tablets' {...a11yProps(0)} />
+            <Tab label="TV's" {...a11yProps(1)} />
+            <Tab label='Celulares' {...a11yProps(2)} />
+            <Tab label='Tablets' {...a11yProps(3)} />
 
           </Tabs>
         </Hidden>
