@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Video from 'twilio-video';
+import { CircularProgress } from '@material-ui/core';
 import Participant from './participant';
 
 const Room = ({ roomName, token, handleLogout }) => {
@@ -55,7 +56,16 @@ const Room = ({ roomName, token, handleLogout }) => {
             ''
           )}
         </div>
-        <div style={{ width: '10%', flex: 1 }}>{remoteParticipants}</div>
+        <div style={{ width: '10%', flex: 1 }}>
+          {remoteParticipants.length ? (
+            remoteParticipants
+          ) : (
+            <div style={{ paddingTop: '30%' }}>
+              <CircularProgress style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }}/>
+              <p style={{ textAlign: 'center' }}>Esperando asistente</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
