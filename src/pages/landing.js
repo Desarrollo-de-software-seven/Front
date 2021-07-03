@@ -1,9 +1,20 @@
+/* eslint-disable no-magic-numbers */
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-
 import logo from '../logo-seven.png';
 import '../App.css';
+
+const ColorButton = withStyles((theme) => ({
+  root: {
+    size: 'large',
+    color: theme.palette.getContrastText('#2d7e7e'),
+    backgroundColor: '#2d7e7e',
+    '&:hover': {
+      backgroundColor: '#0e4e4e',
+    },
+  },
+}))(Button);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +33,7 @@ export default function ReactLanding() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <br></br>
-        <Button className={classes.root} size="large" variant="contained" href="/view-catalog">Ir a Catálogo</Button>
+        <ColorButton className={classes.root} variant="contained" href="/view-catalog">Ir a Catálogo</ColorButton>
       </header>
     </div>
   );
