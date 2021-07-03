@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   // Estilo grid verticales (se ven en la tab 2 y 3)
   YgridList: {
     maxWidth: 1100,
-    width: 1050,
+    width: 1030,
     maxHeight: theme.spacing(65),
     // Aquí se estiliza la scrollbar
     '&::-webkit-scrollbar': {
