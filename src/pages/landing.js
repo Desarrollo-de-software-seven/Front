@@ -36,7 +36,7 @@ export default function ReactLanding() {
     setShopId(event.target.value);
   };
   useEffect(() => {
-    axios.get('http://localhost:3000/stores').then((result) => setShops(result.data));
+    axios.get('http://swdev6.ing.puc.cl/stores').then((result) => setShops(result.data));
   });
 
   return (

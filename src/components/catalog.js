@@ -161,12 +161,9 @@ const ProductsList = (props) => {
   // eslint-disable-next-line max-statements
   const fetchData = async () => {
     try {
-      const tvData = await axios.get('http://localhost:3000/tvs');
-      // setTvs(tvData.data);
-      const tabletsData = await axios.get('http://localhost:3000/tablets');
-      // setTablets([...tabletsData.data]);
-      const phonesData = await axios.get('http://localhost:3000/Smartphones');
-      // setPhones([...phonesData.data]);
+      const tvData = await axios.get('http://swdev6.ing.puc.cl/tvs');
+      const tabletsData = await axios.get('http://swdev6.ing.puc.cl/tablets');
+      const phonesData = await axios.get('http://swdev6.ing.puc.cl/Smartphones');
       const products = [];
       const tvsList = [];
       const tabletsList = [];
