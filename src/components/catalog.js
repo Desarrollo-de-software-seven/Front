@@ -16,6 +16,7 @@ import Tab from '@material-ui/core/Tab';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import Modal from '@material-ui/core/Modal';
 import { green } from '@material-ui/core/colors';
+import axios from 'axios';
 
 import ProductCard from './card';
 
