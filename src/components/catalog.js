@@ -1,5 +1,6 @@
 /* eslint-disable no-magic-numbers */
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import Box from '@material-ui/core/Box';
 
@@ -21,8 +22,8 @@ import axios from 'axios';
 import ProductCard from './card';
 
 // import { catalogProducts } from './sample_json';
-import logo from '../logo-seven.png';
 import call from '../call-assistant.png';
+// import { TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -155,29 +156,45 @@ const ProductsList = (props) => {
   const [tablets, setTablets] = useState([]);
   const [phones, setPhones] = useState([]);
   const [catalogProducts, setCatalgoProducts] = useState([]);
+  const { id } = useParams();
 
   // eslint-disable-next-line max-statements
   const fetchData = async () => {
     try {
       const tvData = await axios.get('http://localhost:3000/tvs');
-      setTvs(tvData.data);
+      // setTvs(tvData.data);
       const tabletsData = await axios.get('http://localhost:3000/tablets');
-      setTablets([...tabletsData.data]);
+      // setTablets([...tabletsData.data]);
       const phonesData = await axios.get('http://localhost:3000/Smartphones');
-      setPhones([...phonesData.data]);
+      // setPhones([...phonesData.data]);
       const products = [];
+      const tvsList = [];
+      const tabletsList = [];
+      const phonesList = [];
       for (let i = 0; i < tvData.data.length; i++) {
-        products.push({ ...tvData.data[i] });
+        if (parseInt(tvData.data[i].StoreId, 10) === parseInt(id, 10)) {
+          tvsList.push({ ...tvData.data[i] });
+          products.push({ ...tvData.data[i] });
+        }
       }
       for (let i = 0; i < tabletsData.data.length; i++) {
-        products.push({ ...tabletsData.data[i] });
+        if (parseInt(tabletsData.data[i].StoreId, 10) === parseInt(id, 10)) {
+          tabletsList.push({ ...tabletsData.data[i] });
+          products.push({ ...tabletsData.data[i] });
+        }
       }
       for (let i = 0; i < phonesData.data.length; i++) {
-        products.push({ ...phonesData.data[i] });
+        if (parseInt(phonesData.data[i].StoreId, 10) === parseInt(id, 10)) {
+          phonesList.push({ ...phonesData.data[i] });
+          products.push({ ...phonesData.data[i] });
+        }
       }
+      setTvs(tvsList);
+      setTablets(tabletsList);
+      setPhones(phonesList);
       setCatalgoProducts(products);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -236,7 +253,7 @@ const ProductsList = (props) => {
   for (let i = 0; i < sortedPhones.length; i++) {
     sortedPhones[i].index = i;
   }
-  console.log(sortedProducts);
+  // console.log(sortedProducts);
   // -----------------------------------------
 
   const selectProduct = (index) => {
