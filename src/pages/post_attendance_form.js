@@ -27,7 +27,7 @@ const PostAttendanceForm = () => (
       </iframe>
     </div>
     <Button href='/view-catalog' variant='contained' style={{ marginBottom: '3%', marginLeft: '80%' }}>
-      Volver al catalogo
+      Volver al catálogo
     </Button>
   </div>
 );

@@ -21,7 +21,7 @@ function App() {
           <Route exact path='/form'>
             <PostAttendanceForm />
           </Route>
-          <Route exact path='/view-catalog'>
+          <Route exact path='/:id/view-catalog'>
             <ViewCatalog />
           </Route>
           <Route exact path='/waiting-view'>

@@ -1,5 +1,6 @@
 /* eslint-disable no-magic-numbers */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import Box from '@material-ui/core/Box';
 
@@ -16,12 +17,13 @@ import Tab from '@material-ui/core/Tab';
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 import Modal from '@material-ui/core/Modal';
 import { green } from '@material-ui/core/colors';
+import axios from 'axios';
 
 import ProductCard from './card';
 
-import { catalogProducts } from './sample_json';
-
+// import { catalogProducts } from './sample_json';
 import call from '../call-assistant.png';
+// import { TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -65,11 +67,13 @@ const useStyles = makeStyles((theme) => ({
   GridListTile: {
     display: 'grid',
     justifyContent: 'center',
+    width: 230,
   },
 
   // Estilo grid verticales (se ven en la tab 2 y 3)
   YgridList: {
     maxWidth: 1100,
+    width: 1030,
     maxHeight: theme.spacing(65),
     // Aquí se estiliza la scrollbar
     '&::-webkit-scrollbar': {
@@ -141,12 +145,60 @@ function a11yProps(index) {
   };
 }
 
+// eslint-disable-next-line max-statements
 const ProductsList = (props) => {
   const classes = useStyles();
 
   // El valor de la tab actual que se está viendo
   const [value, setValue] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState();
+  const [tvs, setTvs] = useState([]);
+  const [tablets, setTablets] = useState([]);
+  const [phones, setPhones] = useState([]);
+  const [catalogProducts, setCatalgoProducts] = useState([]);
+  const { id } = useParams();
+
+  // eslint-disable-next-line max-statements
+  const fetchData = async () => {
+    try {
+      const tvData = await axios.get('http://swdev6.ing.puc.cl/tvs');
+      const tabletsData = await axios.get('http://swdev6.ing.puc.cl/tablets');
+      const phonesData = await axios.get('http://swdev6.ing.puc.cl/Smartphones');
+      const products = [];
+      const tvsList = [];
+      const tabletsList = [];
+      const phonesList = [];
+      for (let i = 0; i < tvData.data.length; i++) {
+        if (parseInt(tvData.data[i].StoreId, 10) === parseInt(id, 10)) {
+          tvsList.push({ ...tvData.data[i] });
+          products.push({ ...tvData.data[i] });
+        }
+      }
+      for (let i = 0; i < tabletsData.data.length; i++) {
+        if (parseInt(tabletsData.data[i].StoreId, 10) === parseInt(id, 10)) {
+          tabletsList.push({ ...tabletsData.data[i] });
+          products.push({ ...tabletsData.data[i] });
+        }
+      }
+      for (let i = 0; i < phonesData.data.length; i++) {
+        if (parseInt(phonesData.data[i].StoreId, 10) === parseInt(id, 10)) {
+          phonesList.push({ ...phonesData.data[i] });
+          products.push({ ...phonesData.data[i] });
+        }
+      }
+      setTvs(tvsList);
+      setTablets(tabletsList);
+      setPhones(phonesList);
+      setCatalgoProducts(products);
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Manejador de cambio de la tab que se está viendo
   const handleChange = (_, newValue) => {
@@ -182,29 +234,53 @@ const ProductsList = (props) => {
 
   // Se utiliza .slice para no cambiar el array original y así utilizar filtros en una copia de él
   // Se hace sort de los request según el atributo requerido de la sample data
-  const sortedProducts = catalogProducts.slice().sort((a, b) => b.created_date - a.created_date);
+  const sortedProducts = catalogProducts.slice().sort((a, b) => ((a.name > b.name) ? 1 : -1));
+  const sortedTvs = tvs.slice().sort((a, b) => ((a.name > b.name) ? 1 : -1));
+  const sortedTablets = tablets.slice().sort((a, b) => ((a.name > b.name) ? 1 : -1));
+  const sortedPhones = phones.slice().sort((a, b) => ((a.name > b.name) ? 1 : -1));
+  for (let i = 0; i < sortedProducts.length; i++) {
+    sortedProducts[i].index = i;
+  }
+  for (let i = 0; i < sortedTvs.length; i++) {
+    sortedTvs[i].index = i;
+  }
+  for (let i = 0; i < sortedTablets.length; i++) {
+    sortedTablets[i].index = i;
+  }
+  for (let i = 0; i < sortedPhones.length; i++) {
+    sortedPhones[i].index = i;
+  }
+  // console.log(sortedProducts);
   // -----------------------------------------
 
-  const ProductDetail = () => {
-    const product = sortedProducts[parseInt(selectedProduct, 10) - 1];
-
-    return (
-      <div className={classes.paper}>
-        <div style={{ flexDirection: 'row', display: 'flex' }}>
-          <Avatar className={classes.avatar} />
-          <div>
-            <h2 id="simple-modal-title">{product.name}</h2>
-            <p id="simple-modal-description">
-          Precio: {product.price}
-            </p>
-          </div>
-        </div>
-        <button type='button' onClick={handleClose}>
-          Cerrar
-        </button>
-      </div>
-    );
+  const selectProduct = (index) => {
+    if (value === 0) {
+      setSelectedProduct(sortedProducts[index]);
+    } else if (value === 1) {
+      setSelectedProduct(sortedTvs[index]);
+    } else if (value === 2) {
+      setSelectedProduct(sortedPhones[index]);
+    } else {
+      setSelectedProduct(sortedTablets[index]);
+    }
   };
+
+  const ProductDetail = () => (
+    <div className={classes.paper}>
+      <div style={{ flexDirection: 'row', display: 'flex' }}>
+        <Avatar className={classes.avatar} />
+        <div>
+          <h2 id="simple-modal-title">{selectedProduct.name}</h2>
+          <p id="simple-modal-description">
+          Precio: {selectedProduct.price}
+          </p>
+        </div>
+      </div>
+      <button type='button' onClick={handleClose}>
+          Cerrar
+      </button>
+    </div>
+  );
 
   return (
     <React.Fragment>
@@ -220,6 +296,9 @@ const ProductsList = (props) => {
             aria-label="Horizontal tabs"
           >
             <Tab label="Catálogo" {...a11yProps(0)} />
+            <Tab label="TV's" {...a11yProps(1)} />
+            <Tab label='Celulares' {...a11yProps(2)} />
+            <Tab label='Tablets' {...a11yProps(3)} />
 
           </Tabs>
         </Paper>
@@ -239,11 +318,14 @@ const ProductsList = (props) => {
             className={classes.verticalTabs}
           >
             <Tab label="Catálogo" {...a11yProps(0)} />
+            <Tab label="TV's" {...a11yProps(1)} />
+            <Tab label='Celulares' {...a11yProps(2)} />
+            <Tab label='Tablets' {...a11yProps(3)} />
 
           </Tabs>
         </Hidden>
 
-        {/* // Aquí comienza el componente de la tab n°2*/}
+        {/* // Aquí comienza el componente de la tab n°0*/}
 
         <TabPanel value={value} index={0}>
 
@@ -267,7 +349,110 @@ const ProductsList = (props) => {
                   requestId={product.id}
                   name={product.name}
                   price= {product.price}
-                  setSelectedProduct = {setSelectedProduct}
+                  index= {product.index}
+                  setSelectedProduct = {selectProduct}
+                />
+
+              </GridListTile>
+            ))}
+
+          </GridList>
+        </TabPanel>
+
+        {/* // Aquí comienza el componente de la tab n°1*/}
+
+        <TabPanel value={value} index={1}>
+
+          {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
+          <Hidden mdDown>
+            <Typography variant='h6'>{'TV\'s'}</Typography>
+          </Hidden>
+          <Hidden lgUp>
+            <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
+          </Hidden>
+          <GridList cellHeight={'auto'} cols={cols} className={classes.YgridList}>
+            {sortedTvs.map((tv) => (
+              <GridListTile key={tv.id} className={classes.GridListTile} >
+
+                {/* Se presenta cada tarjeta de solicitud nueva. Se utiliza slice para no mostrar
+            todos los datos en la vista principal. La idea es que aquí se muestren aquellas
+            solicitudes desde hace X días, por lo que desde el backend se requeriría que los entregaran
+            en un endpoint ordenado */}
+                <ProductCard
+                  key={tv.id}
+                  requestId={tv.id}
+                  name={tv.name}
+                  price= {tv.price}
+                  index= {tv.index}
+                  setSelectedProduct = {selectProduct}
+                />
+
+              </GridListTile>
+            ))}
+
+          </GridList>
+        </TabPanel>
+
+        {/* // Aquí comienza el componente de la tab n°2*/}
+
+        <TabPanel value={value} index={2}>
+
+          {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
+          <Hidden mdDown>
+            <Typography variant='h6'>Celulares</Typography>
+          </Hidden>
+          <Hidden lgUp>
+            <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
+          </Hidden>
+          <GridList cellHeight={'auto'} cols={cols} className={classes.YgridList}>
+            {sortedPhones.map((phone) => (
+              <GridListTile key={phone.id} className={classes.GridListTile} >
+
+                {/* Se presenta cada tarjeta de solicitud nueva. Se utiliza slice para no mostrar
+            todos los datos en la vista principal. La idea es que aquí se muestren aquellas
+            solicitudes desde hace X días, por lo que desde el backend se requeriría que los entregaran
+            en un endpoint ordenado */}
+                <ProductCard
+                  key={phone.id}
+                  requestId={phone.id}
+                  name={phone.name}
+                  price= {phone.price}
+                  index= {phone.index}
+                  setSelectedProduct = {selectProduct}
+                />
+
+              </GridListTile>
+            ))}
+
+          </GridList>
+        </TabPanel>
+
+        {/* // Aquí comienza el componente de la tab n°3*/}
+
+        <TabPanel value={value} index={3}>
+
+          {/* Se cambia el tipo de letra según el tamaño de pantalla con Hidden */}
+          <Hidden mdDown>
+            <Typography variant='h6'>Tablets</Typography>
+          </Hidden>
+          <Hidden lgUp>
+            <Typography variant='body1'><Box fontWeight="fontWeightBold">Catálogo</Box></Typography>
+          </Hidden>
+          <GridList cellHeight={'auto'} cols={cols} className={classes.YgridList}>
+            {sortedTablets.map((tablet) => (
+              <GridListTile key={tablet.id} className={classes.GridListTile} >
+
+                {/* Se presenta cada tarjeta de solicitud nueva. Se utiliza slice para no mostrar
+            todos los datos en la vista principal. La idea es que aquí se muestren aquellas
+            solicitudes desde hace X días, por lo que desde el backend se requeriría que los entregaran
+            en un endpoint ordenado */}
+                <ProductCard
+                  key={tablet.id}
+                  requestId={tablet.id}
+                  name={tablet.name}
+                  price= {tablet.price}
+                  index= {tablet.index}
+                  setSelectedProduct = {selectProduct}
                 />
 
               </GridListTile>
@@ -287,7 +472,7 @@ const ProductsList = (props) => {
       </div>
 
       <a href='/waiting-view'>
-        <img src={call} className="App-call" alt="call" style={{ height: '10%', width: '6%' }}/>
+        <img src={call} className="App-call" alt="call" style={{ height: '12%', width: '6%' }}/>
       </a>
 
     </React.Fragment>
