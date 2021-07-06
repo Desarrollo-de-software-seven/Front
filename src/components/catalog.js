@@ -551,7 +551,7 @@ const ProductsList = (props) => {
 
       </div>
 
-      <a href='/waiting-view'>
+      <a href={`/${id}/waiting-view`}>
         <img src={call} className="App-call" alt="call" style={{ height: '12%', width: '6%' }}/>
       </a>
 
