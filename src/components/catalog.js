@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Box from '@material-ui/core/Box';
+import TvIcon from '@material-ui/icons/Tv';
+import TabletMacIcon from '@material-ui/icons/TabletMac';
+import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
 
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -265,15 +268,80 @@ const ProductsList = (props) => {
     }
   };
 
+  const handleIcon = () => {
+    if (selectedProduct.TV) {
+      return <TvIcon />;
+    } else if (selectedProduct.Smartphone) {
+      return <PhoneAndroidIcon />;
+    }
+
+    return <TabletMacIcon />;
+  };
+
+  const handleType = () => {
+    if (selectedProduct.TV) {
+      return (
+        <div>
+          <p id="simple-modal-description">
+            Tamaño de pantalla: {selectedProduct.TV.screenSize} pulgadas
+          </p>
+          <p id="simple-modal-description">
+            Resolución: {selectedProduct.TV.resolution}
+          </p>
+          <p id="simple-modal-description">
+            Es SmartTV: {selectedProduct.TV.smart ? 'Sí' : 'No'}
+          </p>
+        </div>
+      );
+    } else if (selectedProduct.Smartphone) {
+      return (
+        <div>
+          <p id="simple-modal-description">
+            Tamaño de pantalla: {selectedProduct.Smartphone.screenSize} pulgadas
+          </p>
+          <p id="simple-modal-description">
+            Memoria de almacenamiento: {selectedProduct.Smartphone.memory} GB
+          </p>
+          <p id="simple-modal-description">
+            Cámara: {selectedProduct.Smartphone.camera} MP
+          </p>
+          <p id="simple-modal-description">
+            Tiene puerto MicroSD: {selectedProduct.Smartphone.microSD ? 'Sí' : 'No'}
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <p id="simple-modal-description">
+          Tamaño de pantalla: {selectedProduct.Tablet.screenSize} pulgadas
+        </p>
+        <p id="simple-modal-description">
+          Memoria de almacenamiento: {selectedProduct.Tablet.memory} GB
+        </p>
+        <p id="simple-modal-description">
+          Tiene 3G: {selectedProduct.Tablet.has3G ? 'Sí' : 'No'}
+        </p>
+      </div>
+    );
+  };
+
   const ProductDetail = () => (
     <div className={classes.paper}>
       <div style={{ flexDirection: 'row', display: 'flex' }}>
-        <Avatar className={classes.avatar} />
+        <Avatar className={classes.avatar}>
+          {handleIcon()}
+        </Avatar>
         <div>
           <h2 id="simple-modal-title">{selectedProduct.name}</h2>
           <p id="simple-modal-description">
           Precio: {selectedProduct.price}
           </p>
+          <p id="simple-modal-description">
+          Marca: {selectedProduct.brand}
+          </p>
+          {handleType()}
         </div>
       </div>
       <button type='button' onClick={handleClose}>
@@ -348,7 +416,10 @@ const ProductsList = (props) => {
                   key={product.id}
                   requestId={product.id}
                   name={product.name}
-                  price= {product.price}
+                  price={product.price}
+                  brand={product.brand}
+                  tv={product.TV}
+                  phone={product.Smartphone}
                   index= {product.index}
                   setSelectedProduct = {selectProduct}
                 />
@@ -383,6 +454,9 @@ const ProductsList = (props) => {
                   requestId={tv.id}
                   name={tv.name}
                   price= {tv.price}
+                  brand={tv.brand}
+                  tv={tv.TV}
+                  phone={tv.Smartphone}
                   index= {tv.index}
                   setSelectedProduct = {selectProduct}
                 />
@@ -417,6 +491,9 @@ const ProductsList = (props) => {
                   requestId={phone.id}
                   name={phone.name}
                   price= {phone.price}
+                  brand={phone.brand}
+                  tv={phone.TV}
+                  phone={phone.Smartphone}
                   index= {phone.index}
                   setSelectedProduct = {selectProduct}
                 />
@@ -451,6 +528,9 @@ const ProductsList = (props) => {
                   requestId={tablet.id}
                   name={tablet.name}
                   price= {tablet.price}
+                  brand={tablet.brand}
+                  tv={tablet.TV}
+                  phone={tablet.Smartphone}
                   index= {tablet.index}
                   setSelectedProduct = {selectProduct}
                 />
