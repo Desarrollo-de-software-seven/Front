@@ -9,6 +9,9 @@ import { CardHeader } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
+import TvIcon from '@material-ui/icons/Tv';
+import TabletMacIcon from '@material-ui/icons/TabletMac';
+import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
 
 const useStyles = makeStyles((theme) => createStyles({
   root: {
@@ -34,11 +37,21 @@ const useStyles = makeStyles((theme) => createStyles({
 const ProductCard = (props) => {
   const classes = useStyles();
   const {
-    name, price, setSelectedProduct, index,
+    name, price, brand, tv, phone, setSelectedProduct, index,
   } = props;
 
   const handleClick = () => {
     setSelectedProduct(index);
+  };
+
+  const handleIcon = () => {
+    if (tv) {
+      return <TvIcon />;
+    } else if (phone) {
+      return <PhoneAndroidIcon />;
+    }
+
+    return <TabletMacIcon />;
   };
 
   return (
@@ -49,7 +62,9 @@ const ProductCard = (props) => {
         <CardHeader
           className={classes.cardHeader}
           avatar={(
-            <Avatar alt={name} className={classes.avatar} />
+            <Avatar alt={name} className={classes.avatar}>
+              {handleIcon()}
+            </Avatar>
           )}
           subheader={(
             <Typography style={{ height: 53 }} variant="h6" component="h2">
@@ -64,6 +79,11 @@ const ProductCard = (props) => {
           <Typography variant="caption" component="p">
             <Box fontWeight="fontWeightMedium" display="inline">Precio: $</Box>
             {price}
+          </Typography>
+
+          <Typography variant="caption" component="p">
+            <Box fontWeight="fontWeightMedium" display="inline">Marca: </Box>
+            {brand}
           </Typography>
 
         </CardContent>
