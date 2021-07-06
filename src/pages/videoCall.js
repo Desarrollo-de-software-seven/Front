@@ -1,6 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { jwt } from 'twilio';
 import { CssBaseline } from '@material-ui/core';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import Lobby from '../components/videoCall/lobby';
 import Room from '../components/videoCall/room';
 import Navbar from '../components/navbar';
@@ -16,9 +18,10 @@ const config = {
 
 // eslint-disable-next-line max-statements
 const VideoChat = () => {
-  const [username, setUsername] = useState('');
+  const { id } = useParams();
+  const [username, setUsername] = useState('Cliente');
   // const [roomName, setRoomName] = useState(crypto.randomBytes(20).toString('hex'));
-  const [roomName, setRoomName] = useState('');
+  const [roomName, setRoomName] = useState(id);
   const [token, setToken] = useState(null);
   const AccessToken = jwt.AccessToken;
   const { VideoGrant } = AccessToken;
@@ -31,9 +34,15 @@ const VideoChat = () => {
     setRoomName(event.target.value);
   }, []);
 
-  const handleSubmit = useCallback(async (event) => {
-    event.preventDefault();
+  const handleSubmit = useCallback(async () => {
+    // event.preventDefault();
     try {
+      axios.post('http://swdev6.ing.puc.cl/report', { StoreId: id }, {
+        headers: {
+          // eslint-disable-next-line max-len
+          'Authorization': 'Bearer ',
+        },
+      });
       const videoGrant = new VideoGrant({ room: roomName });
       const newToken = new AccessToken(
         config.accountSid,
@@ -49,16 +58,20 @@ const VideoChat = () => {
   }, [username, roomName]);
 
   const handleLogout = useCallback(() => {
+    axios.patch('http://swdev6.ing.puc.cl/report/noAns', { 'StoreId': id });
     setUsername('');
     setRoomName('');
     setToken(null);
+    const url = `/${id}/form`;
     // eslint-disable-next-line no-undef
-    window.location.replace('/form');
+    window.location.replace(url);
   }, []);
 
-  // useEffect(() => {
-  //   handleSubmit();
-  // }, []);
+  useEffect(() => {
+    if (roomName) {
+      handleSubmit();
+    }
+  }, [roomName]);
 
   let render;
   if (token) {
@@ -74,13 +87,6 @@ const VideoChat = () => {
       <>
         <CssBaseline />
         <Navbar />
-        <Lobby
-          username={username}
-          roomName={roomName}
-          handleUsernameChange={handleUsernameChange}
-          handleRoomNameChange={handleRoomNameChange}
-          handleSubmit={handleSubmit}
-        />
       </>
     );
   }

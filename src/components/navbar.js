@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import VideoCall from '@material-ui/icons/VideoCall';
 import ListAlt from '@material-ui/icons/ListAlt';
+import { useParams } from 'react-router-dom';
 import logo from '../logo-seven.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  const { id } = useParams();
 
   return (
     <div className={classes.root}>
@@ -44,14 +46,14 @@ export default function ButtonAppBar() {
             color="inherit"
             aria-label="catalog"
             startIcon = {<ListAlt />}
-            href='/view-catalog'
+            href={`/${id}/view-catalog`}
           />
           <Button
             className={classes.menuButton}
             color="inherit"
             aria-label="videocall"
             startIcon = {<VideoCall />}
-            href='/waiting-view'
+            href={`/${id}/waiting-view`}
           />
         </Toolbar>
       </AppBar>

@@ -18,16 +18,16 @@ function App() {
     <Router>
       <div>
         <Switch>
-          <Route exact path='/form'>
+          <Route exact path='/:id/form'>
             <PostAttendanceForm />
           </Route>
           <Route exact path='/:id/view-catalog'>
             <ViewCatalog />
           </Route>
-          <Route exact path='/waiting-view'>
+          <Route exact path='/:id/waiting-view'>
             <WaitingView />
           </Route>
-          <Route exact path='/video-call'>
+          <Route exact path='/:id/video-call'>
             <VideoCall />
           </Route>
           <Route exact path='/'>
