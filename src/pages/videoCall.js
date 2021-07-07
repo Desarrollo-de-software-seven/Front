@@ -1,20 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { jwt } from 'twilio';
 import { CssBaseline } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Lobby from '../components/videoCall/lobby';
 import Room from '../components/videoCall/room';
 import Navbar from '../components/navbar';
-
-const config = {
-  // eslint-disable-next-line no-undef
-  accountSid: process.env.REACT_APP_TWILIO_ACCOUNT_SID,
-  // eslint-disable-next-line no-undef
-  apiKey: process.env.REACT_APP_TWILIO_API_KEY,
-  // eslint-disable-next-line no-undef
-  apiSecret: process.env.REACT_APP_TWILIO_API_SECRET,
-};
 
 // eslint-disable-next-line max-statements
 const VideoChat = () => {
