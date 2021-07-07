@@ -8,7 +8,6 @@ import Landing from './pages/landing';
 import ViewCatalog from './pages/view-catalog';
 import WaitingView from './pages/waiting-view';
 import NotFound from './pages/404';
-import VideoCall from './pages/videoCall';
 
 import PostAttendanceForm from './pages/post_attendance_form';
 import './App.css';
@@ -26,9 +25,6 @@ function App() {
           </Route>
           <Route exact path='/:id/waiting-view'>
             <WaitingView />
-          </Route>
-          <Route exact path='/:id/video-call'>
-            <VideoCall />
           </Route>
           <Route exact path='/'>
             <Landing />
