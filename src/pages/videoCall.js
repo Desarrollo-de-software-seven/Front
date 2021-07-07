@@ -23,16 +23,6 @@ const VideoChat = () => {
   // const [roomName, setRoomName] = useState(crypto.randomBytes(20).toString('hex'));
   const [roomName, setRoomName] = useState(id);
   const [token, setToken] = useState(null);
-  const AccessToken = jwt.AccessToken;
-  const { VideoGrant } = AccessToken;
-
-  const handleUsernameChange = useCallback(event => {
-    setUsername(event.target.value);
-  }, []);
-
-  const handleRoomNameChange = useCallback(event => {
-    setRoomName(event.target.value);
-  }, []);
 
   const handleSubmit = useCallback(async () => {
     // event.preventDefault();
@@ -43,15 +33,26 @@ const VideoChat = () => {
           'Authorization': 'Bearer ',
         },
       });
-      const videoGrant = new VideoGrant({ room: roomName });
-      const newToken = new AccessToken(
-        config.accountSid,
-        config.apiKey,
-        config.apiSecret,
-      );
-      newToken.addGrant(videoGrant);
-      newToken.identity = username;
-      setToken(newToken.toJwt());
+      // const videoGrant = new VideoGrant({ room: roomName });
+      // const newToken = new AccessToken(
+      //   config.accountSid,
+      //   config.apiKey,
+      //   config.apiSecret,
+      // );
+      // newToken.addGrant(videoGrant);
+      // newToken.identity = username;
+      // eslint-disable-next-line no-undef
+      const data = await fetch('/video/token', {
+        method: 'POST',
+        body: JSON.stringify({
+          identity: username,
+          room: roomName,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(res => res.json());
+      setToken(data.token);
     } catch (error) {
       console.log(error);
     }
